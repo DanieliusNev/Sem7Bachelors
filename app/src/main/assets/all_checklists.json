@@ -1,0 +1,36 @@
+{
+  "templates": [
+    {
+      "templateId": "template_1",
+      "title": "WTG specifications",
+      "pages": [
+        {
+          "pageId": "page1",
+          "title": "WTG specifications",
+          "fields": [
+            {
+              "type": "text",
+              "label": "Customer / Owner",
+              "placeholder": "Enter name"
+            },
+            {
+              "type": "text",
+              "label": "Project name",
+              "placeholder": "Enter project name"
+            },
+            {
+              "type": "text",
+              "label": "Project no.",
+              "placeholder": "Enter project number"
+            },
+            {
+              "type": "dropdown",
+              "label": "WTG no. / component no.",
+              "options": ["WTG 1", "WTG 2", "WTG 3"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
