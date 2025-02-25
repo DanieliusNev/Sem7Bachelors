@@ -2,31 +2,125 @@
   "templates": [
     {
       "templateId": "template_1",
-      "title": "WTG specifications",
+      "title": "Tip End – C-yoke",
       "pages": [
         {
           "pageId": "page1",
           "title": "WTG specifications",
           "fields": [
             {
+              "id": "Owner",
               "type": "text",
               "label": "Customer / Owner",
               "placeholder": "Enter name"
             },
             {
+              "id": "ProjectName",
               "type": "text",
               "label": "Project name",
               "placeholder": "Enter project name"
             },
             {
+              "id": "ProjectNr",
               "type": "text",
               "label": "Project no.",
               "placeholder": "Enter project number"
             },
             {
+              "id": "TurbineNr",
               "type": "dropdown",
-              "label": "WTG no. / component no.",
+              "label": "WTG no.",
               "options": ["WTG 1", "WTG 2", "WTG 3"]
+            },
+            {
+              "id": "ComponentNo",
+              "type": "text",
+              "label": "Component no.",
+              "placeholder": "Enter component number"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "templateId": "template_2",
+      "title": "Radio Remote Control (RRC)",
+      "pages": [
+        {
+          "pageId": "page1",
+          "title": "WTG specifications",
+          "fields": [
+            {
+              "id": "Owner",
+              "type": "text",
+              "label": "Customer / Owner",
+              "placeholder": "Enter name"
+            },
+            {
+              "id": "ProjectName",
+              "type": "text",
+              "label": "Project name",
+              "placeholder": "Enter project name"
+            },
+            {
+              "id": "ProjectNr",
+              "type": "text",
+              "label": "Project no.",
+              "placeholder": "Enter project number"
+            },
+            {
+              "id": "TurbineNr",
+              "type": "dropdown",
+              "label": "WTG no.",
+              "options": ["WTG 1", "WTG 2", "WTG 3"]
+            },
+            {
+              "id": "ComponentNo",
+              "type": "text",
+              "label": "Component no.",
+              "placeholder": "Enter component number"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "templateId": "template_3",
+      "title": "Rigging and Root End",
+      "pages": [
+        {
+          "pageId": "page1",
+          "title": "WTG specifications",
+          "fields": [
+            {
+              "id": "Owner",
+              "type": "text",
+              "label": "Customer / Owner",
+              "placeholder": "Enter name"
+            },
+            {
+              "id": "ProjectName",
+              "type": "text",
+              "label": "Project name",
+              "placeholder": "Enter project name"
+            },
+            {
+              "id": "ProjectNr",
+              "type": "text",
+              "label": "Project no.",
+              "placeholder": "Enter project number"
+            },
+            {
+              "id": "TurbineNr",
+              "type": "dropdown",
+              "label": "WTG no.",
+              "options": ["WTG 1", "WTG 2", "WTG 3"]
+            },
+            {
+              "id": "ComponentNo",
+              "type": "text",
+              "label": "Component no.",
+              "placeholder": "Enter component number"
             }
           ]
         }
