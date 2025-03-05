@@ -39,6 +39,11 @@
               "placeholder": "Enter component number"
             }
           ]
+        },
+        {
+          "pageId": "page2",
+          "title": "Calibrated Tools",
+          "fields": []
         }
       ]
     },
@@ -81,6 +86,11 @@
               "placeholder": "Enter component number"
             }
           ]
+        },
+        {
+          "pageId": "page2",
+          "title": "Calibrated Tools",
+          "fields": []
         }
       ]
     },
@@ -123,6 +133,11 @@
               "placeholder": "Enter component number"
             }
           ]
+        },
+        {
+          "pageId": "page2",
+          "title": "Calibrated Tools",
+          "fields": []
         }
       ]
     }

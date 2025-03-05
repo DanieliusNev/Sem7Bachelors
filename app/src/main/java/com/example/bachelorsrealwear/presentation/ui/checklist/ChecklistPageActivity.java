@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.bachelorsrealwear.R;
 import com.example.bachelorsrealwear.domain.model.*;
 
@@ -24,42 +27,71 @@ public class ChecklistPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Receive current page index and template
         int templateIndex = getIntent().getIntExtra("template_index", 0);
         int pageIndex = getIntent().getIntExtra("page_index", 0);
 
-        // Load checklist data
         ChecklistTemplate template = loadTemplateFromAssets("all_checklists.json", templateIndex);
-
-        // Determine which layout to use based on pageIndex
         int layoutId = getLayoutIdForPage(pageIndex);
         setContentView(layoutId);
 
-        // Bind views
         pageTitleView = findViewById(R.id.tv_page_title);
         questionContainer = findViewById(R.id.questions_container);
 
         if (template != null && pageIndex < template.pages.size()) {
             ChecklistPage currentPage = template.pages.get(pageIndex);
-            pageTitleView.setText(currentPage.title);
-            renderFields(currentPage.fields);
 
-            Button nextButton = findViewById(R.id.nextStep);
-            nextButton.setOnClickListener(view -> {
-                if (pageIndex + 1 < template.pages.size()) {
-                    Intent intent = new Intent(ChecklistPageActivity.this, ChecklistPageActivity.class);
-                    intent.putExtra("template_index", templateIndex);
-                    intent.putExtra("page_index", pageIndex + 1);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, "All pages completed", Toast.LENGTH_SHORT).show();
+            // Set page title
+            if (pageTitleView != null) {
+                pageTitleView.setText(currentPage.title);
+            }
+
+            // Render fields only if they exist
+            if (questionContainer != null && currentPage.fields != null && !currentPage.fields.isEmpty()) {
+                renderFields(currentPage.fields);
+            }
+
+            // Special logic for Page 2 (tool button only)
+            if (pageIndex == 1) {
+                Button createToolBtn = findViewById(R.id.btn_create_tool);
+                if (createToolBtn != null) {
+                    createToolBtn.setOnClickListener(view -> {
+                        Toast.makeText(this, "Create Tool clicked!", Toast.LENGTH_SHORT).show();
+                        // Later: start new activity or show dialog
+                    });
                 }
-            });
 
+                // Optional: bind the RecyclerView if you want to show empty list later
+                RecyclerView toolRecycler = findViewById(R.id.rv_tool_table);
+                if (toolRecycler != null) {
+                    toolRecycler.setHasFixedSize(true);
+                    toolRecycler.setLayoutManager(new LinearLayoutManager(this));
+                    // adapter setup can come later
+                }
+            }
+
+            // Next button
+            Button nextButton = findViewById(R.id.nextStep);
+            if (nextButton != null) {
+                nextButton.setOnClickListener(view -> {
+                    if (pageIndex + 1 < template.pages.size()) {
+                        Intent intent = new Intent(this, ChecklistPageActivity.class);
+                        intent.putExtra("template_index", templateIndex);
+                        intent.putExtra("page_index", pageIndex + 1);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(this, "All pages completed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            // Back button
             Button backButton = findViewById(R.id.backCheck);
-            backButton.setOnClickListener(view -> finish());
+            if (backButton != null) {
+                backButton.setOnClickListener(view -> finish());
+            }
         }
     }
+
 
     private ChecklistTemplate loadTemplateFromAssets(String filename, int index) {
         try {
@@ -116,7 +148,7 @@ public class ChecklistPageActivity extends AppCompatActivity {
             case 1:
                 return R.layout.activity_questions_page2;
             //case 2:
-                //return R.layout.activity_questions_page3;
+            //return R.layout.activity_questions_page3;
             // Add more pages as needed...
             default:
                 return R.layout.activity_questions_page;
