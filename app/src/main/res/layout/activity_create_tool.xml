@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/spinner_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"/>
+
+
+    <EditText
+        android:id="@+id/et_tool_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tool Number"
+        android:layout_marginTop="12dp" />
+
+    <EditText
+        android:id="@+id/et_expiry_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Expiry Date"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/btn_save_tool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Tool"
+        android:layout_marginTop="24dp" />
+
+</LinearLayout>
