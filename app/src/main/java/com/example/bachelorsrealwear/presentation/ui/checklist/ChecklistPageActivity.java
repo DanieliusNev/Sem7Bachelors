@@ -14,6 +14,7 @@ import com.example.bachelorsrealwear.domain.model.ChecklistField;
 import com.example.bachelorsrealwear.domain.model.ChecklistPage;
 import com.example.bachelorsrealwear.domain.model.ToolEntry;
 import com.example.bachelorsrealwear.domain.usecase.LoadChecklistTemplateUseCase;
+import com.example.bachelorsrealwear.presentation.adapter.ToolListAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -92,19 +93,11 @@ public class ChecklistPageActivity extends AppCompatActivity {
     }
 
     private void refreshToolList() {
-        List<String> toolStrings = new ArrayList<>();
-
-        // Add table-like header
-        toolStrings.add("Description\t\tTool No.\t\tExpiry");
-
-        for (ToolEntry t : ToolDataStore.loadTools(this)) {
-            // Add tab-separated values for cleaner display
-            toolStrings.add(t.description + "\t\t" + t.toolNumber + "\t\t" + t.expiryDate);
-        }
-
-        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, toolStrings);
-        toolListView.setAdapter(listAdapter);
+        List<ToolEntry> tools = ToolDataStore.loadTools(this);
+        ToolListAdapter adapter = new ToolListAdapter(this, tools);
+        toolListView.setAdapter(adapter);
     }
+
 
 
     @Override
