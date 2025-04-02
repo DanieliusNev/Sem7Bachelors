@@ -44,6 +44,16 @@
           "pageId": "page2",
           "title": "Calibrated Tools",
           "fields": []
+        },
+        {
+          "pageId": "page3",
+          "title": "General Inspection",
+          "fields": [
+            { "type": "text", "label": "Nameplate identification", "placeholder": "Enter TR" },
+            { "type": "checkbox", "label": "Check Welding for cracks" },
+            { "type": "checkbox", "label": "Check Lifting eyes for cracks" },
+            { "type": "checkbox", "label": "Check Damage to surfaces" }
+          ]
         }
       ]
     },
@@ -91,12 +101,29 @@
           "pageId": "page2",
           "title": "Calibrated Tools",
           "fields": []
+        },{
+          "pageId": "page3",
+          "title": "RRC Remote Inspection",
+          "fields": [
+            {
+              "type": "text",
+              "label": "Check if the RRC is present and fully charged and functional. Note down the serial no. of remote.",
+              "placeholder": "Serial No."
+            },
+            {
+              "type": "text",
+              "label": "Check if the 2nd RRC is present and full charged and functional. Check the connection between RRC and Receiver. Note down the serial no for the remote.",
+              "placeholder": "Serial No."
+            }
+          ]
         }
+
+
       ]
     },
     {
       "templateId": "template_3",
-      "title": "Rigging and Root End",
+      "title": "Rigging C-yoke and Inspection of Root",
       "pages": [
         {
           "pageId": "page1",
@@ -138,6 +165,31 @@
           "pageId": "page2",
           "title": "Calibrated Tools",
           "fields": []
+        },
+        {
+          "pageId": "page3",
+          "title": "Shackle Inspection",
+          "fields": [
+
+            {
+              "type": "text",
+              "label": "Check the shackle for wear and tear.",
+              "placeholder": "Enter date"
+            },
+            {
+              "type": "yesno",
+              "label": "Anything to report?"
+            },
+            {
+              "type": "text",
+              "label": "Check the sling for wear and tear, dirt, ice.",
+              "placeholder": "Enter date"
+            },
+            {
+              "type": "yesno",
+              "label": "Anything to report?"
+            }
+          ]
         }
       ]
     }

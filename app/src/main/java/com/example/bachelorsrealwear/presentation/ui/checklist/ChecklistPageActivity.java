@@ -15,6 +15,8 @@ import com.example.bachelorsrealwear.domain.model.ChecklistPage;
 import com.example.bachelorsrealwear.domain.model.ToolEntry;
 import com.example.bachelorsrealwear.domain.usecase.LoadChecklistTemplateUseCase;
 import com.example.bachelorsrealwear.presentation.adapter.ToolListAdapter;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -117,36 +119,71 @@ public class ChecklistPageActivity extends AppCompatActivity {
         if (fields == null || fields.isEmpty()) return;
 
         for (ChecklistField field : fields) {
-            LinearLayout row = new LinearLayout(this);
-            row.setOrientation(LinearLayout.HORIZONTAL);
-            row.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
-            row.setPadding(0, 8, 0, 8);
+            if ("checkbox".equalsIgnoreCase(field.type)) {
+                // For checkbox, only add the checkbox with inline text
+                CheckBox checkBox = new CheckBox(this);
+                checkBox.setText(field.label);
+                checkBox.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                ));
+                questionContainer.addView(checkBox);
+            } else if ("yesno".equalsIgnoreCase(field.type)) {
+                TextView label = new TextView(this);
+                label.setText(field.label);
+                label.setTextSize(16);
+                questionContainer.addView(label);
 
-            TextView label = new TextView(this);
-            label.setText(field.label);
-            label.setTextSize(16);
-            label.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            row.addView(label);
+                ChipGroup chipGroup = new ChipGroup(this);
+                //chipGroup.setOrientation(ChipGroup.HORIZONTAL);
+                chipGroup.setSingleSelection(true);
 
-            if ("text".equalsIgnoreCase(field.type)) {
-                EditText input = new EditText(this);
-                input.setHint(field.placeholder);
-                input.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.5f));
-                row.addView(input);
-            } else if ("dropdown".equalsIgnoreCase(field.type)) {
-                Spinner spinner = new Spinner(this);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                        android.R.layout.simple_spinner_dropdown_item, field.options);
-                spinner.setAdapter(adapter);
-                spinner.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.5f));
-                row.addView(spinner);
+                Chip yesChip = new Chip(this);
+                yesChip.setText("Yes");
+                yesChip.setCheckable(true);
+
+                Chip noChip = new Chip(this);
+                noChip.setText("No");
+                noChip.setCheckable(true);
+
+                chipGroup.addView(yesChip);
+                chipGroup.addView(noChip);
+                questionContainer.addView(chipGroup);
             }
+            else {
+                // For text and dropdown, use a row layout with a label
+                LinearLayout row = new LinearLayout(this);
+                row.setOrientation(LinearLayout.HORIZONTAL);
+                row.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+                row.setPadding(0, 8, 0, 8);
 
-            questionContainer.addView(row);
+                TextView label = new TextView(this);
+                label.setText(field.label);
+                label.setTextSize(16);
+                label.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+                row.addView(label);
+
+                if ("text".equalsIgnoreCase(field.type)) {
+                    EditText input = new EditText(this);
+                    input.setHint(field.placeholder);
+                    input.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.5f));
+                    row.addView(input);
+                } else if ("dropdown".equalsIgnoreCase(field.type)) {
+                    Spinner spinner = new Spinner(this);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                            android.R.layout.simple_spinner_dropdown_item, field.options);
+                    spinner.setAdapter(adapter);
+                    spinner.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1.5f));
+                    row.addView(spinner);
+                }
+
+                questionContainer.addView(row);
+            }
         }
     }
+
 
     private int getLayoutIdForPage(int pageIndex) {
         switch (pageIndex) {
@@ -154,6 +191,8 @@ public class ChecklistPageActivity extends AppCompatActivity {
                 return R.layout.activity_questions_page;
             case 1:
                 return R.layout.activity_questions_page2;
+            case 2:
+                return R.layout.activity_questions_page3;
             default:
                 return R.layout.activity_questions_page;
         }
