@@ -1,4 +1,4 @@
-package com.example.bachelorsrealwear.presentation.ui.checklist;
+package com.example.bachelorsrealwear.presentation.ui.viewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -54,6 +54,33 @@
             { "type": "checkbox", "label": "Check Lifting eyes for cracks" },
             { "type": "checkbox", "label": "Check Damage to surfaces" }
           ]
+        },
+        {
+          "pageId": "page4",
+          "title": "Axle & Tagline Point Inspection",
+          "fields": [
+            { "type": "checkbox", "label": "Check Axles and connections" },
+            { "type": "checkbox", "label": "Check that the tagline points are securely fastened" },
+            { "type": "checkbox", "label": "Check if spot welds are intact. If there are no spot welds, then tagline points must be snug tight" }
+          ]
+        },
+        {
+          "pageId": "page5",
+          "title": "HPU Inspection",
+          "fields": [
+            { "type": "checkbox", "label": "Check HPU condition" },
+            { "type": "checkbox", "label": "Check that 1 end is secured with a bracket" },
+            { "type": "checkbox", "label": "Check that another end is secured with pins" }
+          ]
+        },
+        {
+          "pageId": "page6",
+          "title": "Leakage Inspection",
+          "fields": [
+            { "type": "yesno", "label": "Where any leakages found inside system or cylinder of HPU?" },
+            { "type": "checkbox", "label": "Check that 1 end is secured with a bracket" },
+            { "type": "text", "label": "Remarks for documentation", "placeholder": "Remarks" }
+          ]
         }
       ]
     },
@@ -116,9 +143,23 @@
               "placeholder": "Serial No."
             }
           ]
+        },{
+          "pageId": "page4",
+          "title": "Bottom Clamp Inspection",
+          "fields": [
+            {
+              "label": "Turn the main switch to on and then turn on the remote by pulling emergency out and press 5 and 6 numbered buttons.\nRun the cylinder to full stroke both in and out direction.\nWhen the pump is running at full capacity; hold the button down when the cylinder is fully retracted or full extended. The pressure is to be read on the remote screen at 230 ± 2 bar."
+            },
+            {
+              "type": "yesno",
+              "label": "Were any leakages found?"
+            },
+            {
+              "type": "yesno",
+              "label": "Was the pressure outside range?"
+            }
+          ]
         }
-
-
       ]
     },
     {
@@ -188,6 +229,30 @@
             {
               "type": "yesno",
               "label": "Anything to report?"
+            }
+          ]
+        },
+        {
+          "pageId": "page4",
+          "title": "Inspection of the root end",
+          "fields": [
+
+            {
+              "type": "text",
+              "label": "Nameplate identification of Root End",
+              "placeholder": "TR number"
+            },
+            {
+              "type": "yesno",
+              "label": "Check: Spreader beam welding for cracks."
+            },
+            {
+              "type": "yesno",
+              "label": "Check: Spreader beam Lifting eyes for cracks"
+            },
+            {
+              "type": "yesno",
+              "label": "Check: Spreader beam Damage to surfaces."
             }
           ]
         }
