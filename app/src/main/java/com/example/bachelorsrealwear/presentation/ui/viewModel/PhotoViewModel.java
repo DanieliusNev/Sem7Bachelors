@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoViewModel extends ViewModel {
+
     private final MutableLiveData<List<Uri>> photoUris = new MutableLiveData<>(new ArrayList<>());
 
     public LiveData<List<Uri>> getPhotoUris() {
@@ -30,7 +31,7 @@ public class PhotoViewModel extends ViewModel {
         photoUris.setValue(current);
     }
 
-    public void clearPhotos() {
-        photoUris.setValue(new ArrayList<>());
+    public boolean isMaxReached() {
+        return photoUris.getValue() != null && photoUris.getValue().size() >= 4;
     }
 }
