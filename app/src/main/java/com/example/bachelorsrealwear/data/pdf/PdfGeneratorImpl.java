@@ -1,7 +1,13 @@
 package com.example.bachelorsrealwear.data.pdf;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import com.example.bachelorsrealwear.data.storage.ChecklistFormState;
@@ -16,11 +22,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class PdfGeneratorImpl {
     private final Context context;
@@ -32,6 +37,9 @@ public class PdfGeneratorImpl {
     public void fillAndSavePdf(String pdfTemplateName, String mappingFileName, String outputFileName) throws Exception {
         InputStream pdfStream = context.getAssets().open(pdfTemplateName);
         InputStream mappingStream = context.getAssets().open(mappingFileName);
+
+        // Disable XMP metadata parsing workaround
+        System.setProperty("com.itextpdf.xmp.disableAutomaticXmpParsing", "true");
 
         PdfReader reader = new PdfReader(pdfStream);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -57,7 +65,7 @@ public class PdfGeneratorImpl {
                 if (pdfId.toLowerCase().contains("date")) {
                     valueToFill = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                 } else if (pdfId.toLowerCase().contains("initial")) {
-                    valueToFill = "TI"; // placeholder for initials
+                    valueToFill = "TI"; // placeholder initials
                 } else {
                     continue;
                 }
@@ -76,6 +84,10 @@ public class PdfGeneratorImpl {
         }
 
         stamper.setFormFlattening(true);
+
+// ✅ Replace corrupted XMP metadata
+        stamper.getWriter().setXmpMetadata("<?xpacket begin=''?>\n<x:xmpmeta xmlns:x='adobe:ns:meta/'>\n</x:xmpmeta>\n<?xpacket end='w'?>".getBytes());
+
         stamper.close();
         reader.close();
 
@@ -91,16 +103,36 @@ public class PdfGeneratorImpl {
         return builder.toString();
     }
 
+    @SuppressWarnings("deprecation")
     private void saveToDownloads(byte[] data, String filename) throws Exception {
-        File downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        if (!downloads.exists()) downloads.mkdirs();
-        File file = new File(downloads, filename);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.MediaColumns.DISPLAY_NAME, filename);
+            values.put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf");
+            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
 
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.write(data);
-        fos.flush();
-        fos.close();
+            ContentResolver resolver = context.getContentResolver();
+            Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
 
-        Log.d("PDF_GEN", "Saved PDF to: " + file.getAbsolutePath());
+            if (uri != null) {
+                try (OutputStream out = resolver.openOutputStream(uri)) {
+                    if (out != null) {
+                        out.write(data);
+                    }
+                }
+            }
+        } else {
+            File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            if (!downloadsDir.exists()) downloadsDir.mkdirs();
+
+            File file = new File(downloadsDir, filename);
+            try (FileOutputStream fos = new FileOutputStream(file)) {
+                fos.write(data);
+            }
+
+            MediaScannerConnection.scanFile(context, new String[]{file.getAbsolutePath()}, null, null);
+        }
+
+        Log.d("PDF_GEN", "PDF saved to Downloads: " + filename);
     }
 }

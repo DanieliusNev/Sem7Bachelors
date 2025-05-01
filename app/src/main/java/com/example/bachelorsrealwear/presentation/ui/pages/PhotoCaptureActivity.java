@@ -51,6 +51,14 @@ public class PhotoCaptureActivity extends AppCompatActivity {
 
         Button takePhotoButton = findViewById(R.id.btn_take_photo);
         LinearLayout container = findViewById(R.id.photo_preview_container);
+        Button finishButton = findViewById(R.id.nextStep);
+        finishButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PdfSaveActivity.class);
+            intent.putExtra("template_index", getIntent().getIntExtra("template_index", 0));
+            startActivity(intent);
+            finish();
+        });
+
 
         takePhotoButton.setOnClickListener(view -> {
             Log.d("CAMERA_FLOW", "Take Photo button clicked");
