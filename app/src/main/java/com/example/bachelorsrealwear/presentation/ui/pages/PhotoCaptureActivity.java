@@ -1,3 +1,4 @@
+// PhotoCaptureActivity.java
 package com.example.bachelorsrealwear.presentation.ui.pages;
 
 import android.Manifest;
@@ -30,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class PhotoCaptureActivity extends AppCompatActivity {
 
@@ -53,12 +55,18 @@ public class PhotoCaptureActivity extends AppCompatActivity {
         LinearLayout container = findViewById(R.id.photo_preview_container);
         Button finishButton = findViewById(R.id.nextStep);
         finishButton.setOnClickListener(v -> {
+            // ✅ Print all saved answers before moving to PDF activity
+            Map<String, Object> answers = ChecklistFormState.getInstance().getAllAnswers();
+            Log.d("DEBUG_FORM", "=== PhotoCaptureActivity: Answers from ChecklistFormState ===");
+            for (Map.Entry<String, Object> entry : answers.entrySet()) {
+                Log.d("DEBUG_FORM", entry.getKey() + " = " + entry.getValue());
+            }
+
             Intent intent = new Intent(this, PdfSaveActivity.class);
             intent.putExtra("template_index", getIntent().getIntExtra("template_index", 0));
             startActivity(intent);
             finish();
         });
-
 
         takePhotoButton.setOnClickListener(view -> {
             Log.d("CAMERA_FLOW", "Take Photo button clicked");
@@ -76,7 +84,6 @@ public class PhotoCaptureActivity extends AppCompatActivity {
         });
 
         viewModel.getPhotoUris().observe(this, uris -> {
-            ChecklistFormState.getInstance().clear();
             for (Uri uri : uris) {
                 ChecklistFormState.getInstance().addPhoto(uri);
             }
@@ -104,6 +111,7 @@ public class PhotoCaptureActivity extends AppCompatActivity {
 
             takePhotoButton.setEnabled(uris.size() < 6);
         });
+
         Button backBtn = findViewById(R.id.backCheck);
         backBtn.setOnClickListener(v -> {
             Intent backIntent = new Intent(this, ChecklistPageActivity.class);
@@ -112,7 +120,6 @@ public class PhotoCaptureActivity extends AppCompatActivity {
             startActivity(backIntent);
             finish();
         });
-
     }
 
     private void openCamera() {
@@ -171,7 +178,6 @@ public class PhotoCaptureActivity extends AppCompatActivity {
                 ChecklistFormState.getInstance().addPhoto(photoUri);
             } else if (data != null && data.getExtras() != null) {
                 Log.d("CAMERA_FLOW", "Fallback: no URI but thumbnail available");
-                // Optional: Handle thumbnail case if needed
             } else {
                 Log.e("CAMERA_FLOW", "No photoUri or data in result");
             }
@@ -185,8 +191,7 @@ public class PhotoCaptureActivity extends AppCompatActivity {
                                            @NonNull int[] grantResults) {
         Log.d("CAMERA_FLOW", "onRequestPermissionsResult: code=" + requestCode);
         if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.length > 0 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.d("CAMERA_FLOW", "Camera permission granted");
                 openCamera();
             } else {
