@@ -11,9 +11,11 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.example.bachelorsrealwear.data.storage.ChecklistFormState;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PushbuttonField;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -48,6 +50,7 @@ public class PdfGeneratorImpl {
         AcroFields form = stamper.getAcroFields();
         ChecklistFormState formState = ChecklistFormState.getInstance();
         Map<String, Object> answers = formState.getAllAnswers();
+        Map<String, Uri> photoAnswers = formState.getAllPhotos();
 
         Log.d("PDF_GEN", "=== DEBUG: Answers from ChecklistFormState ===");
         for (Map.Entry<String, Object> entry : answers.entrySet()) {
@@ -65,14 +68,32 @@ public class PdfGeneratorImpl {
             String type = field.optString("type", "text");
             boolean autoFill = field.optBoolean("autoFill", false);
 
+            // ✅ Handle image field
+            if (type.equals("photo")) {
+                Uri photoUri = photoAnswers.get(checklistId);
+                if (photoUri != null) {
+                    InputStream imageStream = context.getContentResolver().openInputStream(photoUri);
+                    byte[] imageBytes = readAllBytesCompat(imageStream);
+                    Image img = Image.getInstance(imageBytes);
+
+                    PushbuttonField btn = form.getNewPushbuttonFromField(pdfId);
+                    if (btn != null) {
+                        btn.setLayout(PushbuttonField.LAYOUT_ICON_ONLY);
+                        btn.setImage(img);
+                        form.replacePushbuttonField(pdfId, btn.getField());
+                        Log.d("PDF_GEN", "✔ Inserted photo into field: " + pdfId);
+                    }
+                }
+                continue;
+            }
+
+            // Handle text or checkbox
             String valueToFill = null;
             Object answer = answers.get(checklistId);
 
             if (answer != null) {
-                if (type.equals("checkbox")) {
-                    if (answer instanceof Boolean && (Boolean) answer) {
-                        valueToFill = "Yes";
-                    }
+                if (type.equals("checkbox") && answer instanceof Boolean && (Boolean) answer) {
+                    valueToFill = "Yes";
                 } else if (answer instanceof String && !((String) answer).isEmpty()) {
                     valueToFill = (String) answer;
                 }
@@ -106,6 +127,16 @@ public class PdfGeneratorImpl {
             builder.append((char) ch);
         }
         return builder.toString();
+    }
+
+    private byte[] readAllBytesCompat(InputStream inputStream) throws Exception {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        byte[] data = new byte[4096];
+        int nRead;
+        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+        return buffer.toByteArray();
     }
 
     @SuppressWarnings("deprecation")
