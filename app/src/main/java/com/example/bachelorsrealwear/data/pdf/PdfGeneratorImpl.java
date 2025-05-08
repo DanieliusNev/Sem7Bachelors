@@ -68,7 +68,7 @@ public class PdfGeneratorImpl {
             String type = field.optString("type", "text");
             boolean autoFill = field.optBoolean("autoFill", false);
 
-            // ✅ Handle image field
+            //  Handle image field
             if (type.equals("photo")) {
                 Uri photoUri = photoAnswers.get(checklistId);
                 if (photoUri != null) {
