@@ -21,7 +21,6 @@ import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bachelorsrealwear.R;
-import com.example.bachelorsrealwear.data.storage.ChecklistFormState;
 import com.example.bachelorsrealwear.presentation.ui.viewModel.PhotoViewModel;
 
 import java.io.File;
@@ -30,7 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class PhotoCaptureActivity extends AppCompatActivity {
 
@@ -51,24 +49,9 @@ public class PhotoCaptureActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(PhotoViewModel.class);
 
         Button takePhotoButton = findViewById(R.id.btn_take_photo);
-        LinearLayout container = findViewById(R.id.photo_preview_container);
-
         Button finishButton = findViewById(R.id.nextStep);
-        finishButton.setOnClickListener(v -> {
-            // Log all answers before navigating
-            Log.d("DEBUG_FORM", "=== PhotoCaptureActivity: Answers from ChecklistFormState ===");
-            for (Map.Entry<String, Object> entry : ChecklistFormState.getInstance().getAllAnswers().entrySet()) {
-                Log.d("DEBUG_FORM", entry.getKey() + " = " + entry.getValue());
-            }
-            for (Map.Entry<String, Uri> entry : ChecklistFormState.getInstance().getAllPhotos().entrySet()) {
-                Log.d("DEBUG_FORM", entry.getKey() + " = " + entry.getValue());
-            }
-
-            Intent intent = new Intent(this, PdfSaveActivity.class);
-            intent.putExtra("template_index", getIntent().getIntExtra("template_index", 0));
-            startActivity(intent);
-            finish();
-        });
+        Button backBtn = findViewById(R.id.backCheck);
+        LinearLayout container = findViewById(R.id.photo_preview_container);
 
         takePhotoButton.setOnClickListener(view -> {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -82,16 +65,10 @@ public class PhotoCaptureActivity extends AppCompatActivity {
         });
 
         viewModel.getPhotoUris().observe(this, uris -> {
-            ChecklistFormState.getInstance().getAllPhotos().clear(); // clear all old saved photo entries
-
             container.removeAllViews();
 
             for (int i = 0; i < uris.size(); i++) {
                 Uri uri = uris.get(i);
-
-                // Save photo with specific ID: "Picture 1" to "Picture 6"
-                String fieldId = "Picture " + (i + 1);
-                ChecklistFormState.getInstance().setPhoto(fieldId, uri);
 
                 LinearLayout wrapper = new LinearLayout(this);
                 wrapper.setOrientation(LinearLayout.VERTICAL);
@@ -104,11 +81,7 @@ public class PhotoCaptureActivity extends AppCompatActivity {
 
                 Button deleteBtn = new Button(this);
                 deleteBtn.setText("Delete");
-                int finalI = i;
-                deleteBtn.setOnClickListener(v -> {
-                    viewModel.removePhoto(uri);
-                    ChecklistFormState.getInstance().removePhoto("Picture " + (finalI + 1));
-                });
+                deleteBtn.setOnClickListener(v -> viewModel.removePhoto(uri));
 
                 wrapper.addView(img);
                 wrapper.addView(deleteBtn);
@@ -118,7 +91,13 @@ public class PhotoCaptureActivity extends AppCompatActivity {
             takePhotoButton.setEnabled(uris.size() < 6);
         });
 
-        Button backBtn = findViewById(R.id.backCheck);
+        finishButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PdfSaveActivity.class);
+            intent.putExtra("template_index", getIntent().getIntExtra("template_index", 0));
+            startActivity(intent);
+            finish();
+        });
+
         backBtn.setOnClickListener(v -> {
             Intent backIntent = new Intent(this, ChecklistPageActivity.class);
             backIntent.putExtra("template_index", getIntent().getIntExtra("template_index", 0));
@@ -170,6 +149,7 @@ public class PhotoCaptureActivity extends AppCompatActivity {
             viewModel.addPhoto(photoUri);
         }
     }
+
     @SuppressWarnings("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode,

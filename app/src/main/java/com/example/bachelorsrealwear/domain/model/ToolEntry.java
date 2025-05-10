@@ -14,5 +14,29 @@ public class ToolEntry {
         this.toolNumber = toolNumber;
         this.expiryDate = expiryDate;
     }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getToolNumber() {
+        return toolNumber;
+    }
+
+    public void setToolNumber(String toolNumber) {
+        this.toolNumber = toolNumber;
+    }
+
+    public String getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
 }
 

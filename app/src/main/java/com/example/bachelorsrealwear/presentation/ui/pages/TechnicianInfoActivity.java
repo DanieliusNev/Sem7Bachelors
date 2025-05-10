@@ -9,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bachelorsrealwear.R;
-import com.example.bachelorsrealwear.presentation.ui.pages.ChecklistPageActivity;
-import com.example.bachelorsrealwear.presentation.ui.preview.ChecklistSelectorActivity;
 import com.example.bachelorsrealwear.presentation.ui.viewModel.TechnicianInfoViewModel;
 
 public class TechnicianInfoActivity extends AppCompatActivity {
@@ -39,6 +37,7 @@ public class TechnicianInfoActivity extends AppCompatActivity {
 
         // Optionally pre-fill values if going back from later screens
         nameField.setText(viewModel.getTechnicianName());
+
         employeeField.setText(viewModel.getEmployeeNo());
         companyField.setText(viewModel.getCompanyName());
         initialsField.setText(viewModel.getInitials());

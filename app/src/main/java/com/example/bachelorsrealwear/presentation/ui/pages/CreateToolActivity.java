@@ -3,21 +3,24 @@ package com.example.bachelorsrealwear.presentation.ui.pages;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bachelorsrealwear.R;
-import com.example.bachelorsrealwear.data.storage.ToolDataStore;
-import com.example.bachelorsrealwear.domain.model.ToolEntry;
+import com.example.bachelorsrealwear.presentation.ui.viewModel.ToolViewModel;
 
 public class CreateToolActivity extends AppCompatActivity {
 
     private Spinner spinnerDescription;
     private EditText etToolNumber, etExpiryDate;
     private Button btnSaveTool;
+    private ToolViewModel toolViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_tool);
+
+        toolViewModel = new ViewModelProvider(this).get(ToolViewModel.class);
 
         spinnerDescription = findViewById(R.id.spinner_description);
         etToolNumber = findViewById(R.id.et_tool_number);
@@ -47,8 +50,7 @@ public class CreateToolActivity extends AppCompatActivity {
                 return;
             }
 
-            ToolEntry tool = new ToolEntry(description, toolNumber, expiryDate);
-            ToolDataStore.addTool(this, tool);  // ✅ Save to shared preferences
+            toolViewModel.saveTool(description, toolNumber, expiryDate);
 
             Toast.makeText(this, "Tool saved", Toast.LENGTH_SHORT).show();
 

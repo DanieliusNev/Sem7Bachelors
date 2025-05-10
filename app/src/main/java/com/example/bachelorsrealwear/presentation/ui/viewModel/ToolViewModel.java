@@ -1,0 +1,38 @@
+package com.example.bachelorsrealwear.presentation.ui.viewModel;
+
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.example.bachelorsrealwear.data.storage.ToolDataStore;
+import com.example.bachelorsrealwear.domain.model.ToolEntry;
+
+import java.util.List;
+
+public class ToolViewModel extends AndroidViewModel {
+
+    private final MutableLiveData<List<ToolEntry>> toolListLiveData = new MutableLiveData<>();
+
+    public ToolViewModel(@NonNull Application application) {
+        super(application);
+        loadTools();
+    }
+
+    public LiveData<List<ToolEntry>> getToolList() {
+        return toolListLiveData;
+    }
+
+    public void loadTools() {
+        List<ToolEntry> tools = ToolDataStore.loadTools(getApplication());
+        toolListLiveData.setValue(tools);
+    }
+
+    public void saveTool(String description, String toolNumber, String expiryDate) {
+        ToolEntry tool = new ToolEntry(description, toolNumber, expiryDate);
+        ToolDataStore.addTool(getApplication(), tool);
+        loadTools(); // refresh the LiveData after saving
+    }
+}

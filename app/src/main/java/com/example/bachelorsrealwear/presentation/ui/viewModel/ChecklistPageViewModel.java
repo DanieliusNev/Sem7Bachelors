@@ -1,65 +1,123 @@
 package com.example.bachelorsrealwear.presentation.ui.viewModel;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.bachelorsrealwear.data.repository.ChecklistRepositoryImpl;
 import com.example.bachelorsrealwear.data.storage.ChecklistFormState;
+import com.example.bachelorsrealwear.data.storage.ToolDataStore;
 import com.example.bachelorsrealwear.domain.model.ChecklistField;
+import com.example.bachelorsrealwear.domain.model.ChecklistPage;
 import com.example.bachelorsrealwear.domain.model.ChecklistTemplate;
+import com.example.bachelorsrealwear.domain.model.ToolEntry;
 import com.example.bachelorsrealwear.domain.usecase.LoadChecklistTemplateUseCase;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ChecklistPageViewModel extends ViewModel {
-    private final MutableLiveData<ChecklistTemplate> templateLiveData = new MutableLiveData<>();
-    private final LoadChecklistTemplateUseCase loadTemplateUseCase;
 
-    public ChecklistPageViewModel(LoadChecklistTemplateUseCase useCase) {
-        this.loadTemplateUseCase = useCase;
+    private final MutableLiveData<List<String>> pageFieldIds = new MutableLiveData<>();
+    private final MutableLiveData<List<String>> pageFieldLabels = new MutableLiveData<>();
+    private final MutableLiveData<List<String>> pageFieldTypes = new MutableLiveData<>();
+    private final MutableLiveData<List<List<String>>> pageFieldOptions = new MutableLiveData<>();
+    private final MutableLiveData<List<String>> pageFieldPlaceholders = new MutableLiveData<>();
+    private final MutableLiveData<String> pageTitleLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<String>> toolDisplayList = new MutableLiveData<>();
+
+    private final ChecklistRepositoryImpl repository;
+    private final LoadChecklistTemplateUseCase useCase;
+    private final ChecklistFormState formState = ChecklistFormState.getInstance();
+
+    private final Context context;
+    private ChecklistTemplate template;
+
+    public ChecklistPageViewModel(Context context) {
+        this.context = context.getApplicationContext();
+        this.repository = new ChecklistRepositoryImpl(this.context);
+        this.useCase = new LoadChecklistTemplateUseCase(repository);
     }
 
-    public void loadTemplate(String filename, int index) {
-        ChecklistTemplate template = loadTemplateUseCase.execute(filename, index);
-        templateLiveData.setValue(template);
-    }
+    public void loadTemplate(String filename, int templateIndex, int pageIndex) {
+        template = useCase.execute(filename, templateIndex);
+        if (template != null && pageIndex < template.pages.size()) {
+            ChecklistPage page = template.pages.get(pageIndex);
+            pageTitleLiveData.setValue(page.title);
 
-    public LiveData<ChecklistTemplate> getTemplate() {
-        return templateLiveData;
-    }
+            List<String> ids = new ArrayList<>();
+            List<String> labels = new ArrayList<>();
+            List<String> types = new ArrayList<>();
+            List<List<String>> options = new ArrayList<>();
+            List<String> placeholders = new ArrayList<>();
 
-    public void saveAnswer(String fieldId, Object value) {
-        ChecklistFormState.getInstance().setAnswer(fieldId, value);
-    }
-
-    public Object getSavedAnswer(String fieldId) {
-        return ChecklistFormState.getInstance().getAnswer(fieldId);
-    }
-
-    public void saveAllAnswers(List<ChecklistField> fields, java.util.Map<String, android.view.View> inputViews) {
-        for (ChecklistField field : fields) {
-            android.view.View view = inputViews.get(field.id);
-            if (view == null) continue;
-
-            if (view instanceof android.widget.EditText) {
-                String value = ((android.widget.EditText) view).getText().toString();
-                saveAnswer(field.id, value);
-            } else if (view instanceof android.widget.Spinner) {
-                String value = ((android.widget.Spinner) view).getSelectedItem().toString();
-                saveAnswer(field.id, value);
-            } else if (view instanceof android.widget.CheckBox) {
-                boolean value = ((android.widget.CheckBox) view).isChecked();
-                saveAnswer(field.id, value);
-            } else if (view instanceof com.google.android.material.chip.ChipGroup) {
-                com.google.android.material.chip.ChipGroup chipGroup = (com.google.android.material.chip.ChipGroup) view;
-                int selectedId = chipGroup.getCheckedChipId();
-                if (selectedId != -1) {
-                    com.google.android.material.chip.Chip chip = chipGroup.findViewById(selectedId);
-                    if (chip != null) {
-                        saveAnswer(field.id, chip.getText().toString());
-                    }
-                }
+            for (ChecklistField field : page.fields) {
+                ids.add(field.id);
+                labels.add(field.label);
+                types.add(field.type);
+                options.add(field.options);
+                placeholders.add(field.placeholder);
             }
+
+            pageFieldIds.setValue(ids);
+            pageFieldLabels.setValue(labels);
+            pageFieldTypes.setValue(types);
+            pageFieldOptions.setValue(options);
+            pageFieldPlaceholders.setValue(placeholders);
         }
+    }
+
+    public void loadTools() {
+        List<ToolEntry> tools = ToolDataStore.loadTools(context);
+        List<String> displayList = new ArrayList<>();
+        for (ToolEntry tool : tools) {
+            displayList.add(tool.getDescription() + " | " + tool.getToolNumber() + " | " + tool.getExpiryDate());
+        }
+        toolDisplayList.setValue(displayList);
+    }
+
+    public LiveData<List<String>> getToolDisplayList() {
+        return toolDisplayList;
+    }
+
+    public LiveData<String> getPageTitle() {
+        return pageTitleLiveData;
+    }
+
+    public LiveData<List<String>> getFieldIds() {
+        return pageFieldIds;
+    }
+
+    public LiveData<List<String>> getFieldLabels() {
+        return pageFieldLabels;
+    }
+
+    public LiveData<List<String>> getFieldTypes() {
+        return pageFieldTypes;
+    }
+
+    public LiveData<List<List<String>>> getFieldOptions() {
+        return pageFieldOptions;
+    }
+
+    public LiveData<List<String>> getFieldPlaceholders() {
+        return pageFieldPlaceholders;
+    }
+
+    public Object getAnswer(String fieldId) {
+        return formState.getAnswer(fieldId);
+    }
+
+    public void saveAnswers(Map<String, Object> answers) {
+        for (Map.Entry<String, Object> entry : answers.entrySet()) {
+            formState.setAnswer(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public ChecklistTemplate getTemplate() {
+        return template;
     }
 }

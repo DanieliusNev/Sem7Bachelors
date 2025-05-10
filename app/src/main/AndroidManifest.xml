@@ -34,7 +34,7 @@
         <activity android:name=".presentation.ui.pages.CreateToolActivity" />
         <activity android:name=".presentation.ui.pages.PhotoCaptureActivity" />
         <activity android:name=".presentation.ui.pages.PdfSaveActivity" />
-        <activity android:name=".presentation.ui.preview.ChecklistSelectorActivity" />
+        <activity android:name=".presentation.ui.pages.ChecklistSelectorActivity" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

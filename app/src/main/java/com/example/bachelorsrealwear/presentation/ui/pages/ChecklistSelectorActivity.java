@@ -1,4 +1,4 @@
-package com.example.bachelorsrealwear.presentation.ui.preview;
+package com.example.bachelorsrealwear.presentation.ui.pages;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bachelorsrealwear.R;
-import com.example.bachelorsrealwear.presentation.ui.pages.ChecklistPageActivity;
 
 public class ChecklistSelectorActivity extends AppCompatActivity {
 
