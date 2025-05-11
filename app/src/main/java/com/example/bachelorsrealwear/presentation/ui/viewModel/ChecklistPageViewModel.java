@@ -1,6 +1,7 @@
 package com.example.bachelorsrealwear.presentation.ui.viewModel;
 
 import android.content.Context;
+import android.widget.ArrayAdapter;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,6 +15,7 @@ import com.example.bachelorsrealwear.domain.model.ChecklistPage;
 import com.example.bachelorsrealwear.domain.model.ChecklistTemplate;
 import com.example.bachelorsrealwear.domain.model.ToolEntry;
 import com.example.bachelorsrealwear.domain.usecase.LoadChecklistTemplateUseCase;
+import com.example.bachelorsrealwear.presentation.adapter.ToolListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ public class ChecklistPageViewModel extends ViewModel {
     private final MutableLiveData<List<String>> pageFieldPlaceholders = new MutableLiveData<>();
     private final MutableLiveData<String> pageTitleLiveData = new MutableLiveData<>();
     private final MutableLiveData<List<String>> toolDisplayList = new MutableLiveData<>();
+    private final MutableLiveData<ArrayAdapter<ToolEntry>> toolAdapterLiveData = new MutableLiveData<>();
 
     private final ChecklistRepositoryImpl repository;
     private final LoadChecklistTemplateUseCase useCase;
@@ -70,13 +73,15 @@ public class ChecklistPageViewModel extends ViewModel {
         }
     }
 
-    public void loadTools() {
+
+    public LiveData<ArrayAdapter<ToolEntry>> getToolAdapter() {
+        return toolAdapterLiveData;
+    }
+
+    public void loadTools(Context context) {
         List<ToolEntry> tools = ToolDataStore.loadTools(context);
-        List<String> displayList = new ArrayList<>();
-        for (ToolEntry tool : tools) {
-            displayList.add(tool.getDescription() + " | " + tool.getToolNumber() + " | " + tool.getExpiryDate());
-        }
-        toolDisplayList.setValue(displayList);
+        ToolListAdapter adapter = new ToolListAdapter(context, tools);
+        toolAdapterLiveData.setValue(adapter);
     }
 
     public LiveData<List<String>> getToolDisplayList() {

@@ -83,15 +83,12 @@ public class ChecklistPageActivity extends AppCompatActivity {
                 startActivityForResult(intent, 101);
             });
 
-            viewModel.getToolDisplayList().observe(this, displayList -> {
-                ArrayAdapter<String> toolAdapter = new ArrayAdapter<>(
-                        this,
-                        android.R.layout.simple_list_item_1,
-                        displayList);
-                toolListView.setAdapter(toolAdapter);
+            viewModel.getToolAdapter().observe(this, adapter -> {
+                toolListView.setAdapter(adapter);
             });
 
-            viewModel.loadTools();
+
+            viewModel.loadTools(this);
         }
     }
 
@@ -99,7 +96,7 @@ public class ChecklistPageActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101 && resultCode == RESULT_OK && pageIndex == 1) {
-            viewModel.loadTools();
+            viewModel.loadTools(this);
         }
     }
 
