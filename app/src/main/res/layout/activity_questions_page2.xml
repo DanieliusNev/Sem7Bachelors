@@ -4,10 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <!-- Scrollable dynamic content area -->
     <ScrollView
-        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="341dp"
         android:layout_above="@+id/backCheck"
@@ -15,13 +12,11 @@
         android:layout_marginBottom="10dp">
 
         <LinearLayout
-            android:id="@+id/ll_dynamic_fields"
+            android:id="@+id/questions_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
-
-            <!-- Page title -->
 
             <TextView
                 android:id="@+id/tv_page_title"
@@ -32,16 +27,22 @@
                 android:textColor="#171616"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_create_tool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Tool"
+                android:layout_marginBottom="12dp" />
 
-            <!-- Container for question rows -->
-            <LinearLayout
-                android:id="@+id/questions_container"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_tool_table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </LinearLayout>
+                android:layout_marginTop="8dp" />
 
+        </LinearLayout>
     </ScrollView>
+
 
     <Button
         android:id="@+id/nextStep"
