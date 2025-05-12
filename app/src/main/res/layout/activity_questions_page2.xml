@@ -4,16 +4,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="39dp">
 
         <LinearLayout
             android:id="@+id/questions_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="4dp">
 
             <TextView
                 android:id="@+id/tv_page_title"
@@ -21,17 +18,55 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
                 android:text="Page Title"
+                android:textColor="#151414"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
 
         </LinearLayout>
-    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lv_tool_table"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="0dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Description"
+            android:textColor="#151414"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="#151414"
+            android:text="Tool No."
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="#151414"
+            android:text="Expiry"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/lv_tool_table"
         android:layout_width="match_parent"
-        android:layout_height="197dp"
+        android:layout_height="188dp"
         android:layout_above="@+id/btn_create_tool"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="2dp"
