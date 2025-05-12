@@ -1,23 +1,32 @@
+// ChecklistPageActivity.java
 package com.example.bachelorsrealwear.presentation.ui.checklist;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bachelorsrealwear.R;
+import com.example.bachelorsrealwear.data.storage.ToolDataStore;
 import com.example.bachelorsrealwear.data.repository.ChecklistRepositoryImpl;
-import com.example.bachelorsrealwear.domain.model.*;
+import com.example.bachelorsrealwear.domain.model.ChecklistField;
+import com.example.bachelorsrealwear.domain.model.ChecklistPage;
+import com.example.bachelorsrealwear.domain.model.ToolEntry;
 import com.example.bachelorsrealwear.domain.usecase.LoadChecklistTemplateUseCase;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChecklistPageActivity extends AppCompatActivity {
+    private static final int CREATE_TOOL_REQUEST = 101;
 
     private TextView pageTitleView;
     private LinearLayout questionContainer;
+    private ListView toolListView;
+    private ArrayAdapter<String> listAdapter;
+
     private ChecklistPageViewModel viewModel;
     private int templateIndex;
     private int pageIndex;
@@ -29,7 +38,6 @@ public class ChecklistPageActivity extends AppCompatActivity {
         templateIndex = getIntent().getIntExtra("template_index", 0);
         pageIndex = getIntent().getIntExtra("page_index", 0);
 
-        // Inject repo -> usecase -> vm
         ChecklistRepositoryImpl repo = new ChecklistRepositoryImpl(getApplicationContext());
         LoadChecklistTemplateUseCase useCase = new LoadChecklistTemplateUseCase(repo);
         viewModel = new ChecklistPageViewModel(useCase);
@@ -51,47 +59,69 @@ public class ChecklistPageActivity extends AppCompatActivity {
         viewModel.loadTemplate("all_checklists.json", templateIndex);
 
         Button nextButton = findViewById(R.id.nextStep);
-        nextButton.setOnClickListener(view -> {
-            if (viewModel.getTemplate().getValue() != null &&
-                    pageIndex + 1 < viewModel.getTemplate().getValue().pages.size()) {
-                Intent intent = new Intent(this, ChecklistPageActivity.class);
-                intent.putExtra("template_index", templateIndex);
-                intent.putExtra("page_index", pageIndex + 1);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "All pages completed", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        Button backButton = findViewById(R.id.backCheck);
-        backButton.setOnClickListener(view -> finish());
-
-        if (pageIndex == 1) { // Only for the "Calibrated Tools" page
-            Button createToolButton = findViewById(R.id.btn_create_tool);
-            createToolButton.setOnClickListener(v -> {
-                Intent intent = new Intent(this, CreateToolActivity.class);
-                startActivity(intent);
+        if (nextButton != null) {
+            nextButton.setOnClickListener(view -> {
+                if (viewModel.getTemplate().getValue() != null &&
+                        pageIndex + 1 < viewModel.getTemplate().getValue().pages.size()) {
+                    Intent intent = new Intent(this, ChecklistPageActivity.class);
+                    intent.putExtra("template_index", templateIndex);
+                    intent.putExtra("page_index", pageIndex + 1);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "All pages completed", Toast.LENGTH_SHORT).show();
+                }
             });
         }
 
+        Button backButton = findViewById(R.id.backCheck);
+        if (backButton != null) {
+            backButton.setOnClickListener(view -> finish());
+        }
+
+        if (pageIndex == 1) {
+            Button createToolButton = findViewById(R.id.btn_create_tool);
+            toolListView = findViewById(R.id.lv_tool_table);
+
+            createToolButton.setOnClickListener(v -> {
+                Intent intent = new Intent(this, CreateToolActivity.class);
+                startActivityForResult(intent, CREATE_TOOL_REQUEST);
+            });
+
+            refreshToolList();
+        }
+    }
+
+    private void refreshToolList() {
+        List<String> toolStrings = new ArrayList<>();
+
+        // Add table-like header
+        toolStrings.add("Description\t\tTool No.\t\tExpiry");
+
+        for (ToolEntry t : ToolDataStore.loadTools(this)) {
+            // Add tab-separated values for cleaner display
+            toolStrings.add(t.description + "\t\t" + t.toolNumber + "\t\t" + t.expiryDate);
+        }
+
+        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, toolStrings);
+        toolListView.setAdapter(listAdapter);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CREATE_TOOL_REQUEST && resultCode == RESULT_OK) {
+            refreshToolList();
+        }
     }
 
     private void renderFields(List<ChecklistField> fields) {
-        // Don't remove static views like title or create button
-        // Instead, remove only dynamic field rows
-        // We'll assume dynamic views are added after the static ones
-
-        // Optional: if you want to remove previous dynamic views without affecting static layout
-        // Remove all views *after* the first 2 children (title + button)
         int childCount = questionContainer.getChildCount();
         if (childCount > 2) {
             questionContainer.removeViews(2, childCount - 2);
         }
 
-        if (fields == null || fields.isEmpty()) {
-            // Skip rendering, static content will remain
-            return;
-        }
+        if (fields == null || fields.isEmpty()) return;
 
         for (ChecklistField field : fields) {
             LinearLayout row = new LinearLayout(this);
@@ -124,8 +154,6 @@ public class ChecklistPageActivity extends AppCompatActivity {
             questionContainer.addView(row);
         }
     }
-
-
 
     private int getLayoutIdForPage(int pageIndex) {
         switch (pageIndex) {
