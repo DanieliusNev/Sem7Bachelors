@@ -1,7 +1,5 @@
-package com.example.bachelorsrealwear.presentation.ui.checklist;
+package com.example.bachelorsrealwear.presentation.ui.pages;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;

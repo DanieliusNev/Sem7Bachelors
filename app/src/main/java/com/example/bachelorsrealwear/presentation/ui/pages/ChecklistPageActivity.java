@@ -1,5 +1,5 @@
 // ChecklistPageActivity.java
-package com.example.bachelorsrealwear.presentation.ui.checklist;
+package com.example.bachelorsrealwear.presentation.ui.pages;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,11 +15,10 @@ import com.example.bachelorsrealwear.domain.model.ChecklistPage;
 import com.example.bachelorsrealwear.domain.model.ToolEntry;
 import com.example.bachelorsrealwear.domain.usecase.LoadChecklistTemplateUseCase;
 import com.example.bachelorsrealwear.presentation.adapter.ToolListAdapter;
+import com.example.bachelorsrealwear.presentation.ui.viewModel.ChecklistPageViewModel;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChecklistPageActivity extends AppCompatActivity {
@@ -28,8 +27,6 @@ public class ChecklistPageActivity extends AppCompatActivity {
     private TextView pageTitleView;
     private LinearLayout questionContainer;
     private ListView toolListView;
-    private ArrayAdapter<String> listAdapter;
-
     private ChecklistPageViewModel viewModel;
     private int templateIndex;
     private int pageIndex;
@@ -64,15 +61,25 @@ public class ChecklistPageActivity extends AppCompatActivity {
         Button nextButton = findViewById(R.id.nextStep);
         if (nextButton != null) {
             nextButton.setOnClickListener(view -> {
-                if (viewModel.getTemplate().getValue() != null &&
-                        pageIndex + 1 < viewModel.getTemplate().getValue().pages.size()) {
-                    Intent intent = new Intent(this, ChecklistPageActivity.class);
-                    intent.putExtra("template_index", templateIndex);
-                    intent.putExtra("page_index", pageIndex + 1);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, "All pages completed", Toast.LENGTH_SHORT).show();
+                if (viewModel.getTemplate().getValue() != null) {
+                    int totalPages = viewModel.getTemplate().getValue().pages.size();
+
+                    if (pageIndex + 1 < totalPages) {
+                        // Go to next checklist page
+                        Intent intent = new Intent(this, ChecklistPageActivity.class);
+                        intent.putExtra("template_index", templateIndex);
+                        intent.putExtra("page_index", pageIndex + 1);
+                        startActivity(intent);
+                    } else if (pageIndex + 1 == totalPages) {
+                        // Page 7 (photo page) should be launched here
+                        Intent intent = new Intent(this, PhotoCaptureActivity.class);
+                        startActivity(intent);
+                    } else {
+                        // After photo page or any unknown overflow
+                        Toast.makeText(this, "All pages completed", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             });
         }
 
@@ -193,6 +200,12 @@ public class ChecklistPageActivity extends AppCompatActivity {
                 return R.layout.activity_questions_page2;
             case 2:
                 return R.layout.activity_questions_page3;
+            case 3:
+                return R.layout.activity_questions_page4;
+            case 4:
+                return R.layout.activity_questions_page5;
+            case 5:
+                return R.layout.activity_questions_page6;
             default:
                 return R.layout.activity_questions_page;
         }

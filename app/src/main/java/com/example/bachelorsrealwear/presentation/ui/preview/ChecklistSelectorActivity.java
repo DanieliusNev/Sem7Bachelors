@@ -10,7 +10,7 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bachelorsrealwear.R;
-import com.example.bachelorsrealwear.presentation.ui.checklist.ChecklistPageActivity;
+import com.example.bachelorsrealwear.presentation.ui.pages.ChecklistPageActivity;
 
 public class ChecklistSelectorActivity extends AppCompatActivity {
 

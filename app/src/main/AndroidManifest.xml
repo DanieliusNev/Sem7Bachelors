@@ -24,9 +24,9 @@
         </activity>
 
         <!-- Checklist activity -->
-        <activity android:name=".presentation.ui.checklist.ChecklistPageActivity" />
-        <activity android:name=".presentation.ui.checklist.CreateToolActivity" />
-
+        <activity android:name=".presentation.ui.pages.ChecklistPageActivity" />
+        <activity android:name=".presentation.ui.pages.CreateToolActivity" />
+        <activity android:name=".presentation.ui.pages.PhotoCaptureActivity" />
     </application>
 
 </manifest>
