@@ -64,24 +64,25 @@ public class ChecklistPageActivity extends AppCompatActivity {
                 if (viewModel.getTemplate().getValue() != null) {
                     int totalPages = viewModel.getTemplate().getValue().pages.size();
 
-                    if (pageIndex + 1 < totalPages) {
-                        // Go to next checklist page
+                    if (pageIndex + 1 < totalPages - 1) {
+                        // Normal page-to-page: 0 → 1, 1 → 2, etc.
                         Intent intent = new Intent(this, ChecklistPageActivity.class);
                         intent.putExtra("template_index", templateIndex);
                         intent.putExtra("page_index", pageIndex + 1);
-                        startActivity(intent);
-                    } else if (pageIndex + 1 == totalPages) {
-                        // Page 7 (photo page) should be launched here
+                        startActivity(intent); // ✅ No finish here
+                    } else if (pageIndex + 1 == totalPages - 1) {
+                        // From last JSON-defined page (Page 6 index = 5) to Photo (Page 7)
                         Intent intent = new Intent(this, PhotoCaptureActivity.class);
+                        intent.putExtra("template_index", templateIndex);
                         startActivity(intent);
+                        finish(); // ✅ Only here
                     } else {
-                        // After photo page or any unknown overflow
                         Toast.makeText(this, "All pages completed", Toast.LENGTH_SHORT).show();
                     }
                 }
-
             });
         }
+
 
         Button backButton = findViewById(R.id.backCheck);
         if (backButton != null) {
@@ -100,6 +101,7 @@ public class ChecklistPageActivity extends AppCompatActivity {
             refreshToolList();
         }
     }
+
 
     private void refreshToolList() {
         List<ToolEntry> tools = ToolDataStore.loadTools(this);
