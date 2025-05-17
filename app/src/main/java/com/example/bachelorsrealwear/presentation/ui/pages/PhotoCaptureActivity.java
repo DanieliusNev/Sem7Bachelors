@@ -21,6 +21,7 @@ import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bachelorsrealwear.R;
+import com.example.bachelorsrealwear.data.storage.ChecklistFormState;
 import com.example.bachelorsrealwear.presentation.ui.viewModel.PhotoViewModel;
 
 import java.io.File;
@@ -67,6 +68,11 @@ public class PhotoCaptureActivity extends AppCompatActivity {
         });
 
         viewModel.getPhotoUris().observe(this, uris -> {
+            ChecklistFormState.getInstance().clear();
+            for (Uri uri : uris) {
+                ChecklistFormState.getInstance().addPhoto(uri);
+            }
+
             container.removeAllViews();
             for (Uri uri : uris) {
                 LinearLayout wrapper = new LinearLayout(this);
@@ -154,6 +160,7 @@ public class PhotoCaptureActivity extends AppCompatActivity {
             if (photoUri != null) {
                 Log.d("CAMERA_FLOW", "Adding photo to ViewModel: " + photoUri);
                 viewModel.addPhoto(photoUri);
+                ChecklistFormState.getInstance().addPhoto(photoUri);
             } else if (data != null && data.getExtras() != null) {
                 Log.d("CAMERA_FLOW", "Fallback: no URI but thumbnail available");
                 // Optional: Handle thumbnail case if needed

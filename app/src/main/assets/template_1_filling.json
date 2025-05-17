@@ -1,0 +1,653 @@
+{
+  "templateId": "template_1",
+  "fields": [
+    {
+      "pdfFieldId": "DateFieldFront",
+      "checklistFieldId": "DateFieldFront",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Owner",
+      "checklistFieldId": "Owner",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "ProjectName",
+      "checklistFieldId": "ProjectName",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "ProjectNr",
+      "checklistFieldId": "ProjectNr",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "TurbineNr",
+      "checklistFieldId": "TurbineNr",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "ComponentNo",
+      "checklistFieldId": "ComponentNo",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "TECH_Employee_No_1",
+      "checklistFieldId": "TECH_Employee_No_1",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Company_name_1",
+      "checklistFieldId": "TECH_Company_name_1",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Initials_1",
+      "checklistFieldId": "TECH_Initials_1",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Technicians_Name_2",
+      "checklistFieldId": "Technicians_Name_2",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Employee_No_2",
+      "checklistFieldId": "Employee_No_2",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Company_name_2",
+      "checklistFieldId": "Company_name_2",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Initials_2",
+      "checklistFieldId": "Initials_2",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Technicians_Name_3",
+      "checklistFieldId": "Technicians_Name_3",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Employee_No_3",
+      "checklistFieldId": "Employee_No_3",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Company_name_3",
+      "checklistFieldId": "Company_name_3",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Initials_3",
+      "checklistFieldId": "Initials_3",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Technicians_Name_4",
+      "checklistFieldId": "Technicians_Name_4",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Employee_No_4",
+      "checklistFieldId": "Employee_No_4",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Company_name_4",
+      "checklistFieldId": "Company_name_4",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Initials_4",
+      "checklistFieldId": "Initials_4",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Technicians_Name_5",
+      "checklistFieldId": "Technicians_Name_5",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Employee_No_5",
+      "checklistFieldId": "Employee_No_5",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Company_name_5",
+      "checklistFieldId": "Company_name_5",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Initials_5",
+      "checklistFieldId": "Initials_5",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Technicians_Name_6",
+      "checklistFieldId": "Technicians_Name_6",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Employee_No_6",
+      "checklistFieldId": "Employee_No_6",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Company_name_6",
+      "checklistFieldId": "Company_name_6",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Initials_6",
+      "checklistFieldId": "Initials_6",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Technicians_Name_7",
+      "checklistFieldId": "Technicians_Name_7",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Employee_No_7",
+      "checklistFieldId": "Employee_No_7",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Company_name_7",
+      "checklistFieldId": "Company_name_7",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Initials_7",
+      "checklistFieldId": "Initials_7",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Technicians_Name_1",
+      "checklistFieldId": "TECH_Technicians_Name_1",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "DateField2",
+      "checklistFieldId": "DateField2",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Calibrated_tool_No_1",
+      "checklistFieldId": "Calibrated_tool_No_1",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibraton_expiry_date_1",
+      "checklistFieldId": "Calibraton_expiry_date_1",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Description_of_calibrated_tool_2",
+      "checklistFieldId": "Description_of_calibrated_tool_2",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibrated_tool_No_2",
+      "checklistFieldId": "Calibrated_tool_No_2",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Description_of_calibrated_tool_1",
+      "checklistFieldId": "Description_of_calibrated_tool_1",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibraton_expiry_date_2",
+      "checklistFieldId": "Calibraton_expiry_date_2",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Description_of_calibrated_tool_3",
+      "checklistFieldId": "Description_of_calibrated_tool_3",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibrated_tool_No_3",
+      "checklistFieldId": "Calibrated_tool_No_3",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibraton_expiry_date_3",
+      "checklistFieldId": "Calibraton_expiry_date_3",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Description_of_calibrated_tool_4",
+      "checklistFieldId": "Description_of_calibrated_tool_4",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibrated_tool_No_4",
+      "checklistFieldId": "Calibrated_tool_No_4",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibraton_expiry_date_4",
+      "checklistFieldId": "Calibraton_expiry_date_4",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Description_of_calibrated_tool_5",
+      "checklistFieldId": "Description_of_calibrated_tool_5",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibrated_tool_No_5",
+      "checklistFieldId": "Calibrated_tool_No_5",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibraton_expiry_date_5",
+      "checklistFieldId": "Calibraton_expiry_date_5",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Description_of_calibrated_tool_6",
+      "checklistFieldId": "Description_of_calibrated_tool_6",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibrated_tool_No_6",
+      "checklistFieldId": "Calibrated_tool_No_6",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibraton_expiry_date_6",
+      "checklistFieldId": "Calibraton_expiry_date_6",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Description_of_calibrated_tool_7",
+      "checklistFieldId": "Description_of_calibrated_tool_7",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibrated_tool_No_7",
+      "checklistFieldId": "Calibrated_tool_No_7",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibraton_expiry_date_7",
+      "checklistFieldId": "Calibraton_expiry_date_7",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Description_of_calibrated_tool_8",
+      "checklistFieldId": "Description_of_calibrated_tool_8",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibrated_tool_No_8",
+      "checklistFieldId": "Calibrated_tool_No_8",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibraton_expiry_date_8",
+      "checklistFieldId": "Calibraton_expiry_date_8",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Description_of_calibrated_tool_9",
+      "checklistFieldId": "Description_of_calibrated_tool_9",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibrated_tool_No_9",
+      "checklistFieldId": "Calibrated_tool_No_9",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibraton_expiry_date_9",
+      "checklistFieldId": "Calibraton_expiry_date_9",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Description_of_calibrated_tool_10",
+      "checklistFieldId": "Description_of_calibrated_tool_10",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibrated_tool_No_10",
+      "checklistFieldId": "Calibrated_tool_No_10",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Calibraton_expiry_date_10",
+      "checklistFieldId": "Calibraton_expiry_date_10",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_DATE1.0.0",
+      "checklistFieldId": "TECH_DATE1.0.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Initial1.0.0",
+      "checklistFieldId": "TECH_Initial1.0.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Remarks_11",
+      "checklistFieldId": "Remarks_11",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "TECH_CB1",
+      "checklistFieldId": "TECH_CB1",
+      "type": "checkbox",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_CB3",
+      "checklistFieldId": "TECH_CB3",
+      "type": "checkbox",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_CB5",
+      "checklistFieldId": "TECH_CB5",
+      "type": "checkbox",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_DATE1.1.0",
+      "checklistFieldId": "TECH_DATE1.1.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Initial1.1.0",
+      "checklistFieldId": "TECH_Initial1.1.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_DATE1.2.0",
+      "checklistFieldId": "TECH_DATE1.2.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Initial1.2.0",
+      "checklistFieldId": "TECH_Initial1.2.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_CB7",
+      "checklistFieldId": "TECH_CB7",
+      "type": "checkbox",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_DATE1.3.0",
+      "checklistFieldId": "TECH_DATE1.3.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Initial1.3.0",
+      "checklistFieldId": "TECH_Initial1.3.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_CB9.0",
+      "checklistFieldId": "TECH_CB9.0",
+      "type": "checkbox",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_CB9.1",
+      "checklistFieldId": "TECH_CB9.1",
+      "type": "checkbox",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_DATE1.4.0.0",
+      "checklistFieldId": "TECH_DATE1.4.0.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Initial1.4.0.0",
+      "checklistFieldId": "TECH_Initial1.4.0.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_CB11",
+      "checklistFieldId": "TECH_CB11",
+      "type": "checkbox",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_CB41.0",
+      "checklistFieldId": "TECH_CB41.0",
+      "type": "checkbox",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_DATE1.4.0.1",
+      "checklistFieldId": "TECH_DATE1.4.0.1",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Initial1.4.0.1",
+      "checklistFieldId": "TECH_Initial1.4.0.1",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_CB41.1",
+      "checklistFieldId": "TECH_CB41.1",
+      "type": "checkbox",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_DATE1.7.0",
+      "checklistFieldId": "TECH_DATE1.7.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Initial1.7.0",
+      "checklistFieldId": "TECH_Initial1.7.0",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Remarks_1",
+      "checklistFieldId": "Remarks_1",
+      "type": "text",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Picture 1",
+      "checklistFieldId": "Picture 1",
+      "type": "photo",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Picture 2",
+      "checklistFieldId": "Picture 2",
+      "type": "photo",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Picture 3",
+      "checklistFieldId": "Picture 3",
+      "type": "photo",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Picture 4",
+      "checklistFieldId": "Picture 4",
+      "type": "photo",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Picture 5",
+      "checklistFieldId": "Picture 5",
+      "type": "photo",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "Picture 6",
+      "checklistFieldId": "Picture 6",
+      "type": "photo",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "TECH_Name",
+      "checklistFieldId": "TECH_Name",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Employee_No",
+      "checklistFieldId": "TECH_Employee_No",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Department_500",
+      "checklistFieldId": "TECH_Department_500",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "TECH_Company",
+      "checklistFieldId": "TECH_Company",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Signature1",
+      "checklistFieldId": "Signature1",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "TECH_Date500",
+      "checklistFieldId": "TECH_Date500",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "IL_Name",
+      "checklistFieldId": "IL_Name",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "IL_Employee_No",
+      "checklistFieldId": "IL_Employee_No",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "IL_Department",
+      "checklistFieldId": "IL_Department",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "IL_Company",
+      "checklistFieldId": "IL_Company",
+      "type": "text",
+      "autoFill": true
+    },
+    {
+      "pdfFieldId": "Signature2",
+      "checklistFieldId": "Signature2",
+      "type": "unknown",
+      "autoFill": false
+    },
+    {
+      "pdfFieldId": "IL_Date500",
+      "checklistFieldId": "IL_Date500",
+      "type": "text",
+      "autoFill": true
+    }
+  ]
+}
