@@ -3,6 +3,7 @@ package com.example.bachelorsrealwear.presentation.ui.pages;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.annotation.Nullable;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bachelorsrealwear.R;
 import com.example.bachelorsrealwear.data.repository.ChecklistRepositoryImpl;
+import com.example.bachelorsrealwear.data.storage.ChecklistFormState;
 import com.example.bachelorsrealwear.data.storage.ToolDataStore;
 import com.example.bachelorsrealwear.domain.model.ChecklistField;
 import com.example.bachelorsrealwear.domain.model.ChecklistPage;
@@ -69,6 +71,10 @@ public class ChecklistPageActivity extends AppCompatActivity {
             nextButton.setOnClickListener(view -> {
                 if (currentFields != null) {
                     viewModel.saveAllAnswers(currentFields, inputViews);
+                }
+                Log.d("DEBUG_FORM", "--- Saved answers on ChecklistPageActivity ---");
+                for (Map.Entry<String, Object> entry : ChecklistFormState.getInstance().getAllAnswers().entrySet()) {
+                    Log.d("DEBUG_FORM", entry.getKey() + " = " + entry.getValue());
                 }
 
                 if (viewModel.getTemplate().getValue() != null) {

@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 public class PdfGeneratorImpl {
     private final Context context;
@@ -38,7 +39,6 @@ public class PdfGeneratorImpl {
         InputStream pdfStream = context.getAssets().open(pdfTemplateName);
         InputStream mappingStream = context.getAssets().open(mappingFileName);
 
-        // Disable XMP metadata parsing workaround
         System.setProperty("com.itextpdf.xmp.disableAutomaticXmpParsing", "true");
 
         PdfReader reader = new PdfReader(pdfStream);
@@ -47,6 +47,12 @@ public class PdfGeneratorImpl {
 
         AcroFields form = stamper.getAcroFields();
         ChecklistFormState formState = ChecklistFormState.getInstance();
+        Map<String, Object> answers = formState.getAllAnswers();
+
+        Log.d("PDF_GEN", "=== DEBUG: Answers from ChecklistFormState ===");
+        for (Map.Entry<String, Object> entry : answers.entrySet()) {
+            Log.d("PDF_GEN", "Answer ID: " + entry.getKey() + " = " + entry.getValue());
+        }
 
         String mappingJson = readStreamToString(mappingStream);
         JSONObject mapping = new JSONObject(mappingJson);
@@ -55,38 +61,37 @@ public class PdfGeneratorImpl {
         for (int i = 0; i < fields.length(); i++) {
             JSONObject field = fields.getJSONObject(i);
             String pdfId = field.getString("pdfFieldId");
-            String type = field.getString("type");
-            boolean autoFill = field.optBoolean("autoFill", false);
             String checklistId = field.optString("checklistFieldId", "");
+            String type = field.optString("type", "text");
+            boolean autoFill = field.optBoolean("autoFill", false);
 
-            String valueToFill = "";
+            String valueToFill = null;
+            Object answer = answers.get(checklistId);
 
-            if (autoFill) {
+            if (answer != null) {
+                if (type.equals("checkbox")) {
+                    if (answer instanceof Boolean && (Boolean) answer) {
+                        valueToFill = "Yes";
+                    }
+                } else if (answer instanceof String && !((String) answer).isEmpty()) {
+                    valueToFill = (String) answer;
+                }
+            } else if (autoFill) {
                 if (pdfId.toLowerCase().contains("date")) {
                     valueToFill = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                 } else if (pdfId.toLowerCase().contains("initial")) {
-                    valueToFill = "TI"; // placeholder initials
-                } else {
-                    continue;
-                }
-            } else {
-                Object answer = formState.getAnswer(checklistId);
-                if (answer instanceof Boolean && (Boolean) answer) {
-                    valueToFill = "Yes";
-                } else if (answer instanceof String) {
-                    valueToFill = (String) answer;
-                } else {
-                    continue; // Skip null or unchecked fields
+                    valueToFill = "TI";
                 }
             }
 
-            form.setField(pdfId, valueToFill);
+            if (valueToFill != null) {
+                form.setField(pdfId, valueToFill);
+                Log.d("PDF_GEN", "Filled " + pdfId + " = " + valueToFill);
+            }
         }
 
         stamper.setFormFlattening(true);
-
-// ✅ Replace corrupted XMP metadata
-        stamper.getWriter().setXmpMetadata("<?xpacket begin=''?>\n<x:xmpmeta xmlns:x='adobe:ns:meta/'>\n</x:xmpmeta>\n<?xpacket end='w'?>".getBytes());
+        stamper.getWriter().setXmpMetadata("<?xpacket begin=''?>\n<x:xmpmeta xmlns:x='adobe:ns:meta/'><x:xmpmeta>\n<?xpacket end='w'?>".getBytes());
 
         stamper.close();
         reader.close();
