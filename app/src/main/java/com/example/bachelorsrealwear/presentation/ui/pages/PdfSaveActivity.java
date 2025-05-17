@@ -1,4 +1,3 @@
-// PdfSaveActivity.java
 package com.example.bachelorsrealwear.presentation.ui.pages;
 
 import android.Manifest;
@@ -21,6 +20,7 @@ public class PdfSaveActivity extends AppCompatActivity {
 
     private PdfSaveViewModel viewModel;
     private static final int STORAGE_PERMISSION_CODE = 2001;
+    private int templateIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +28,23 @@ public class PdfSaveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pdf_save);
 
         viewModel = new ViewModelProvider(this).get(PdfSaveViewModel.class);
+        templateIndex = getIntent().getIntExtra("template_index", 0);
 
         Button downloadBtn = findViewById(R.id.btn_download_pdf);
         downloadBtn.setOnClickListener(v -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(
+                            this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            STORAGE_PERMISSION_CODE
+                    );
                 } else {
-                    viewModel.generateAndSavePdf(this);
+                    viewModel.generateAndSavePdf(this, templateIndex);
                 }
             } else {
-                viewModel.generateAndSavePdf(this);
+                viewModel.generateAndSavePdf(this, templateIndex);
             }
         });
     }
@@ -48,7 +54,7 @@ public class PdfSaveActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == STORAGE_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                viewModel.generateAndSavePdf(this);
+                viewModel.generateAndSavePdf(this, templateIndex);
             } else {
                 Toast.makeText(this, "Storage permission denied", Toast.LENGTH_SHORT).show();
             }
