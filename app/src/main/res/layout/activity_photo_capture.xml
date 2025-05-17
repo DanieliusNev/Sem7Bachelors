@@ -9,12 +9,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <Button
-            android:id="@+id/btn_take_photo"
-            android:text="Take Photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Photo Attachments"
+            android:textColor="#221F1F"
+            android:textSize="20sp" />
         <LinearLayout
             android:id="@+id/photo_preview_container"
             android:layout_width="match_parent"
@@ -23,19 +24,32 @@
             android:gravity="center"
             android:layout_marginTop="16dp">
             <!-- Dynamically show 1-4 ImageViews -->
+
         </LinearLayout>
+
+
+
     </LinearLayout>
 
-
+    <Button
+        android:id="@+id/btn_take_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/backCheck"
+        android:layout_marginStart="450dp"
+        android:layout_marginEnd="610dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toEndOf="@+id/backCheck"
+        android:text="Take Photo" />
 
     <Button
         android:id="@+id/nextStep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="64dp"
+        android:layout_marginStart="30dp"
         android:layout_marginBottom="12dp"
+        android:layout_toEndOf="@+id/bubble7"
         android:text="Finish" />
 
     <View
@@ -96,7 +110,7 @@
         android:layout_height="25dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="198dp"
+        android:layout_marginStart="142dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/bubble_bg"
         android:padding="8dp"
@@ -197,7 +211,7 @@
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="628dp"
+        android:layout_marginStart="572dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/bubble_for_sequence"
         android:padding="8dp"
@@ -250,7 +264,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="63dp"
+        android:layout_marginStart="25dp"
         android:layout_marginBottom="12dp"
         android:text="Back" />
 

@@ -45,6 +45,15 @@ public class PhotoCaptureActivity extends AppCompatActivity {
         Log.d("CAMERA_FLOW", "onCreate: Activity started");
 
         setContentView(R.layout.activity_photo_capture);
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+        );
 
         viewModel = new ViewModelProvider(this).get(PhotoViewModel.class);
 
@@ -75,7 +84,7 @@ public class PhotoCaptureActivity extends AppCompatActivity {
                 wrapper.setPadding(8, 8, 8, 8);
 
                 ImageView img = new ImageView(this);
-                img.setLayoutParams(new LinearLayout.LayoutParams(200, 200));
+                img.setLayoutParams(new LinearLayout.LayoutParams(250, 250));
                 img.setImageURI(uri);
                 img.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
