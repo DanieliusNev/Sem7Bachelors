@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.lifecycle.ViewModel;
 
 import com.example.bachelorsrealwear.data.pdf.PdfGeneratorImpl;
+import com.example.bachelorsrealwear.domain.service.PdfService;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +18,7 @@ public class PdfSaveViewModel extends ViewModel {
     public void generateAndSavePdf(Context context, int templateIndex) {
         new Thread(() -> {
             try {
-                PdfGeneratorImpl pdfGenerator = new PdfGeneratorImpl(context);
+                PdfService pdfGenerator = new PdfGeneratorImpl(context);
 
                 // Determine filenames based on selected template
                 String pdfTemplate = "ZCH Template " + (templateIndex + 1) + ".pdf";

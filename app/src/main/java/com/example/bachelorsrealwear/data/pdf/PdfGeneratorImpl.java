@@ -10,7 +10,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.example.bachelorsrealwear.data.repository.AzureUploadManager;
 import com.example.bachelorsrealwear.data.storage.ChecklistFormState;
+import com.example.bachelorsrealwear.domain.repository.CloudUploadRepository;
+import com.example.bachelorsrealwear.domain.service.PdfService;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
@@ -30,7 +33,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-public class PdfGeneratorImpl {
+public class PdfGeneratorImpl implements PdfService {
     private final Context context;
 
     public PdfGeneratorImpl(Context context) {
@@ -118,6 +121,12 @@ public class PdfGeneratorImpl {
         reader.close();
 
         saveToDownloads(baos.toByteArray(), outputFileName);
+//Azure stuff
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File savedFile = new File(downloadsDir, outputFileName);
+
+        CloudUploadRepository uploader = new AzureUploadManager(context);
+        uploader.uploadPdf(savedFile, outputFileName);
     }
 
     private String readStreamToString(InputStream is) throws Exception {

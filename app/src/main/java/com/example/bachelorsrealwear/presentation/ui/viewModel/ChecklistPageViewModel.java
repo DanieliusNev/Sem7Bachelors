@@ -14,6 +14,8 @@ import com.example.bachelorsrealwear.domain.model.ChecklistField;
 import com.example.bachelorsrealwear.domain.model.ChecklistPage;
 import com.example.bachelorsrealwear.domain.model.ChecklistTemplate;
 import com.example.bachelorsrealwear.domain.model.ToolEntry;
+import com.example.bachelorsrealwear.domain.repository.ChecklistRepository;
+import com.example.bachelorsrealwear.domain.repository.ToolRepository;
 import com.example.bachelorsrealwear.domain.usecase.LoadChecklistTemplateUseCase;
 import com.example.bachelorsrealwear.presentation.adapter.ToolListAdapter;
 
@@ -32,8 +34,10 @@ public class ChecklistPageViewModel extends ViewModel {
     private final MutableLiveData<List<String>> toolDisplayList = new MutableLiveData<>();
     private final MutableLiveData<ArrayAdapter<ToolEntry>> toolAdapterLiveData = new MutableLiveData<>();
 
-    private final ChecklistRepositoryImpl repository;
+    private final ChecklistRepository repository;
     private final LoadChecklistTemplateUseCase useCase;
+    private final ToolRepository toolRepository;
+
     private final ChecklistFormState formState = ChecklistFormState.getInstance();
 
     private final Context context;
@@ -43,6 +47,8 @@ public class ChecklistPageViewModel extends ViewModel {
         this.context = context.getApplicationContext();
         this.repository = new ChecklistRepositoryImpl(this.context);
         this.useCase = new LoadChecklistTemplateUseCase(repository);
+        this.toolRepository = new ToolDataStore();
+
     }
 
     public void loadTemplate(String filename, int templateIndex, int pageIndex) {
@@ -79,7 +85,7 @@ public class ChecklistPageViewModel extends ViewModel {
     }
 
     public void loadTools(Context context) {
-        List<ToolEntry> tools = ToolDataStore.loadTools(context);
+        List<ToolEntry> tools = toolRepository.loadTools(context); // ✅
         ToolListAdapter adapter = new ToolListAdapter(context, tools);
         toolAdapterLiveData.setValue(adapter);
     }
