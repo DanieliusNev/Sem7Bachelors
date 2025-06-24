@@ -12,6 +12,8 @@ import android.util.Log;
 
 import com.example.bachelorsrealwear.data.repository.AzureUploadManager;
 import com.example.bachelorsrealwear.data.storage.ChecklistFormState;
+import com.example.bachelorsrealwear.data.storage.ToolDataStore;
+import com.example.bachelorsrealwear.domain.model.ToolEntry;
 import com.example.bachelorsrealwear.domain.repository.CloudUploadRepository;
 import com.example.bachelorsrealwear.domain.service.PdfService;
 import com.itextpdf.text.Image;
@@ -30,6 +32,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -52,6 +55,17 @@ public class PdfGeneratorImpl implements PdfService {
 
         AcroFields form = stamper.getAcroFields();
         ChecklistFormState formState = ChecklistFormState.getInstance();
+        // Pre-fill first 4 tools into ChecklistFormState
+        List<ToolEntry> tools = new ToolDataStore().loadTools(context);
+        for (int i = 0; i < Math.min(4, tools.size()); i++) {
+            ToolEntry tool = tools.get(i);
+            int index = i + 1;
+
+            formState.setAnswer("Description_of_calibrated_tool_" + index, tool.description);
+            formState.setAnswer("Calibrated_tool_No_" + index, tool.toolNumber);
+            formState.setAnswer("Calibraton_expiry_date_" + index, tool.expiryDate);
+        }
+
         Map<String, Object> answers = formState.getAllAnswers();
         Map<String, Uri> photoAnswers = formState.getAllPhotos();
 
@@ -104,7 +118,11 @@ public class PdfGeneratorImpl implements PdfService {
                 if (pdfId.toLowerCase().contains("date")) {
                     valueToFill = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                 } else if (pdfId.toLowerCase().contains("initial")) {
-                    valueToFill = "TI";
+                    // Get initials from technician name
+                    String technicianName = (String) formState.getAnswer("TECH_Initials_1");
+                    if (technicianName != null && !technicianName.trim().isEmpty()) {
+                        valueToFill = technicianName.trim();
+                    }
                 }
             }
 
@@ -125,8 +143,8 @@ public class PdfGeneratorImpl implements PdfService {
         File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         File savedFile = new File(downloadsDir, outputFileName);
 
-        CloudUploadRepository uploader = new AzureUploadManager(context);
-        uploader.uploadPdf(savedFile, outputFileName);
+        //CloudUploadRepository uploader = new AzureUploadManager(context);
+        //uploader.uploadPdf(savedFile, outputFileName);
     }
 
     private String readStreamToString(InputStream is) throws Exception {

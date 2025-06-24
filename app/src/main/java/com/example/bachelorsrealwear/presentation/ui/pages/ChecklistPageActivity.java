@@ -89,6 +89,14 @@ public class ChecklistPageActivity extends AppCompatActivity {
 
 
             viewModel.loadTools(this);
+            Button deleteToolButton = findViewById(R.id.btn_delete_tool);
+
+            deleteToolButton.setOnClickListener(v -> {
+                viewModel.deleteSelectedTools();
+                Toast.makeText(this, "Selected tools deleted", Toast.LENGTH_SHORT).show();
+            });
+
+
         }
     }
 

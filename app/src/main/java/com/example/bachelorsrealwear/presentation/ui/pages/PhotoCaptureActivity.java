@@ -1,6 +1,8 @@
 package com.example.bachelorsrealwear.presentation.ui.pages;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -81,10 +83,10 @@ public class PhotoCaptureActivity extends AppCompatActivity {
 
                 LinearLayout wrapper = new LinearLayout(this);
                 wrapper.setOrientation(LinearLayout.VERTICAL);
-                wrapper.setPadding(8, 8, 8, 8);
+                wrapper.setPadding(4, 4, 4, 4);
 
                 ImageView img = new ImageView(this);
-                img.setLayoutParams(new LinearLayout.LayoutParams(250, 250));
+                img.setLayoutParams(new LinearLayout.LayoutParams(200, 200));
                 img.setImageURI(uri);
                 img.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -117,30 +119,43 @@ public class PhotoCaptureActivity extends AppCompatActivity {
     }
 
     private void openCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (intent.resolveActivity(getPackageManager()) == null) {
-            Log.e("CAMERA_FLOW", "No camera app available!");
-            return;
-        }
+        final Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        try {
-            File photoFile = createImageFile();
-            if (photoFile != null) {
-                photoUri = FileProvider.getUriForFile(
-                        this,
-                        getPackageName() + ".provider",
-                        photoFile
-                );
-                currentPhotoPath = photoFile.getAbsolutePath();
+        // Define where to store the captured image
+        ContentValues contentValues = new ContentValues();
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "IMG_" + timeStamp + ".jpg");
+        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
+        contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
 
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                startActivityForResult(intent, CAMERA_REQUEST_CODE);
-            }
-        } catch (Exception e) {
-            Log.e("CAMERA_FLOW", "Exception during camera intent setup", e);
+        // Get the content URI for the image
+        photoUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+        if (photoUri != null) {
+            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            captureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            startActivityForResult(captureIntent, CAMERA_REQUEST_CODE);
+        } else {
+            Log.e("CAMERA_FLOW", "Failed to create image URI");
         }
     }
+
+    private static final int PICK_IMAGE_REQUEST = 102;
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+
+        try {
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        } catch (ActivityNotFoundException e) {
+            Log.e("CAMERA_FLOW", "No file picker available on device", e);
+        }
+    }
+
+
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
@@ -156,8 +171,15 @@ public class PhotoCaptureActivity extends AppCompatActivity {
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK && photoUri != null) {
             viewModel.addPhoto(photoUri);
+        } else if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            Uri selectedImage = data.getData();
+            if (selectedImage != null) {
+                viewModel.addPhoto(selectedImage);
+            }
         }
     }
+
+
 
     @SuppressWarnings("MissingSuperCall")
     @Override

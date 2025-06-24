@@ -32,5 +32,11 @@
         android:layout_height="wrap_content"
         android:text="Save Tool"
         android:layout_marginTop="24dp" />
+    <Button
+        android:id="@+id/btn_cancel_tool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_marginTop="12dp" />
 
 </LinearLayout>

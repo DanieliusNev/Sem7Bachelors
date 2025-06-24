@@ -26,7 +26,9 @@ public class TechnicianInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_technician_info);
 
-        viewModel = new ViewModelProvider(this).get(TechnicianInfoViewModel.class);
+        viewModel = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()))
+                .get(TechnicianInfoViewModel.class);
 
         // Bind UI elements
         nameField = findViewById(R.id.editTextTechnicianName);

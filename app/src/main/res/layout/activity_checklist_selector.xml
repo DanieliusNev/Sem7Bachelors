@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@android:color/white">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/tv_select_template"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Checklist Template:"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        android:text="Select Checklist Template"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
 
+    <!-- Spinner with label-style border -->
     <Spinner
         android:id="@+id/spinner_templates"
         android:layout_width="match_parent"
-        android:layout_height="43dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="48dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:layout_marginBottom="32dp" />
 
+    <!-- Continue Button -->
     <Button
         android:id="@+id/btn_continue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Continue" />
+        android:text="Continue"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:backgroundTint="@color/purple_700"
+        android:textColor="@android:color/white"
+        android:padding="12dp" />
+
 </LinearLayout>

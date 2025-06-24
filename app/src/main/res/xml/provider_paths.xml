@@ -1,0 +1,6 @@
+<!-- res/xml/provider_paths.xml -->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-files-path
+        name="my_pdfs"
+        path="Download/" />
+</paths>

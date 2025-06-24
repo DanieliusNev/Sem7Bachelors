@@ -174,7 +174,7 @@
       "pdfFieldId": "Calibraton_expiry_date_6",
       "checklistFieldId": "Calibraton_expiry_date_6",
       "type": "text",
-      "autoFill": true
+      "autoFill": false
     },
     {
       "pdfFieldId": "Description_of_calibrated_tool_7",

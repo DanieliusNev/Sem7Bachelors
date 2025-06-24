@@ -1,5 +1,6 @@
 package com.example.bachelorsrealwear.presentation.ui.pages;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +13,7 @@ public class CreateToolActivity extends AppCompatActivity {
 
     private Spinner spinnerDescription;
     private EditText etToolNumber, etExpiryDate;
-    private Button btnSaveTool;
+    private Button btnSaveTool, btnCancelTool;
     private ToolViewModel toolViewModel;
 
     @Override
@@ -26,6 +27,7 @@ public class CreateToolActivity extends AppCompatActivity {
         etToolNumber = findViewById(R.id.et_tool_number);
         etExpiryDate = findViewById(R.id.et_expiry_date);
         btnSaveTool = findViewById(R.id.btn_save_tool);
+        Button btnCancelTool = findViewById(R.id.btn_cancel_tool);
 
         String[] toolOptions = {
                 "Hydraulic pump", "Pressure gauge", "Torque and tension heads", "Pump model X",
@@ -57,5 +59,9 @@ public class CreateToolActivity extends AppCompatActivity {
             setResult(RESULT_OK);
             finish();
         });
+        btnCancelTool.setOnClickListener(v -> {
+            finish(); // Just close the activity and return to previous
+        });
+
     }
 }

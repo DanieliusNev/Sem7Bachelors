@@ -5,42 +5,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-        <LinearLayout
-            android:id="@+id/questions_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="4dp">
-
-            <TextView
-                android:id="@+id/tv_page_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
-                android:text="Page Title"
-                android:textColor="#151414"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-
-        </LinearLayout>
-
     <LinearLayout
+        android:id="@+id/questions_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/lv_tool_table"
-        android:layout_marginBottom="0dp"
+        android:orientation="vertical"
+        android:padding="0dp"
+        android:background="@color/purple_700"
+        android:paddingBottom="15dp">
+
+        <!-- Green accent bar on the left -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="#33E699"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Title stays the same but styled -->
+            <TextView
+                android:id="@+id/tv_page_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tool_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/questions_container"
+        android:layout_marginBottom="4dp"
         android:orientation="horizontal"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="0dp">
+        android:background="#F5F5F5"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:elevation="2dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="Description"
-            android:textColor="#151414"
+            android:textColor="#444444"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -48,8 +68,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:textColor="#151414"
             android:text="Tool No."
+            android:textColor="#444444"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -57,33 +77,44 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:textColor="#151414"
             android:text="Expiry"
+            android:textColor="#444444"
             android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
 
+
     <ListView
         android:id="@+id/lv_tool_table"
+        android:layout_below="@+id/tool_header"
         android:layout_width="match_parent"
         android:layout_height="188dp"
         android:layout_above="@+id/btn_create_tool"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="2dp"
         android:dividerHeight="1dp" />
+
 
     <Button
         android:id="@+id/btn_create_tool"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/backCheck"
-        android:layout_alignStart="@+id/nextStep"
-        android:layout_marginStart="0dp"
-        android:layout_marginBottom="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="9dp"
         android:text="Create Tool" />
 
-
-
+    <Button
+        android:id="@+id/btn_delete_tool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/nextStep"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="9dp"
+        android:text="Delete Tools" />
 
     <Button
         android:id="@+id/nextStep"

@@ -131,4 +131,19 @@ public class ChecklistPageViewModel extends ViewModel {
     public ChecklistTemplate getTemplate() {
         return template;
     }
+    public void deleteSelectedTools() {
+        ToolListAdapter adapter = (ToolListAdapter) toolAdapterLiveData.getValue();
+        if (adapter != null) {
+            List<ToolEntry> all = adapter.getAllItems();
+            List<ToolEntry> toDelete = adapter.getSelectedItems();
+
+            if (!toDelete.isEmpty()) {
+                all.removeAll(toDelete);
+                toolRepository.saveTools(context, all);
+                ToolListAdapter newAdapter = new ToolListAdapter(context, all);
+                toolAdapterLiveData.setValue(newAdapter);
+            }
+        }
+    }
+
 }

@@ -1,39 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editTextTechnicianName"
-        android:hint="Technician Name"
+    <!-- Title bar pinned to top -->
+    <TextView
+        android:id="@+id/tv_screen_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="48dp"
+        android:background="@color/purple_700"
+        android:paddingStart="16dp"
+        android:gravity="center_vertical"
+        android:text="User Information"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/editTextEmployeeNo"
-        android:hint="Employee No."
+    <!-- Form content below the title -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <EditText
-        android:id="@+id/editTextCompanyName"
-        android:hint="Company Name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/editTextTechnicianName"
+            android:hint="Technician Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
 
-    <EditText
-        android:id="@+id/editTextInitials"
-        android:hint="Initials"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/editTextEmployeeNo"
+            android:hint="Employee No."
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
 
-    <Button
-        android:id="@+id/buttonContinue"
-        android:text="Continue to Checklist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"/>
-</LinearLayout>
+        <EditText
+            android:id="@+id/editTextCompanyName"
+            android:hint="Company Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/editTextInitials"
+            android:hint="Initials"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/buttonContinue"
+            android:text="Continue to Checklist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</FrameLayout>

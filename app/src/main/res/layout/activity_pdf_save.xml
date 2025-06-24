@@ -3,19 +3,56 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:background="@android:color/white">
 
+    <!-- Title -->
     <TextView
-        android:id="@+id/tv_pdf_ready"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Checklist Complete"
         android:textSize="20sp"
-        android:layout_marginBottom="20dp" />
+        android:textColor="#171616"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
 
+    <!-- File Name -->
+    <TextView
+        android:id="@+id/tv_pdf_filename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saved as: checklist_wtg_123.pdf"
+        android:textColor="#555555"
+        android:textSize="14sp"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Download Button -->
     <Button
         android:id="@+id/btn_download_pdf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Download PDF" />
+        android:text="Download"
+        android:backgroundTint="@color/purple_700"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Open PDF -->
+    <Button
+        android:id="@+id/btn_open_pdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Files"
+        android:backgroundTint="#DDDDDD"
+        android:textColor="#000000"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Optional: Start new checklist -->
+    <Button
+        android:id="@+id/btn_new_checklist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start New Checklist"
+        android:backgroundTint="#EEEEEE"
+        android:textColor="#000000" />
+
 </LinearLayout>
